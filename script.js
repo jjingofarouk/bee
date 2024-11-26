@@ -3,7 +3,8 @@ let points = 5000; // Starting points
 let bestRound = 0; // Best round score
 let consecutiveWins = 0; // Track consecutive wins
 const entranceFee = 20; // Fee to roll the dice (fixed at 20 points)
-const winPercentage = 0.38; // Player wins 38% of the time based on the scoring system
+const winPercentage = 0.27; // Player wins 27% of the time
+const expectedLoss = 15; // Expected average loss per game for the player (house advantage)
 
 // Elements from HTML
 const rollButton = document.getElementById("rollButton");
@@ -40,15 +41,17 @@ function rollDice() {
     // Calculate points based on the number of fives rolled and win chance
     let pointsAwarded = calculatePoints(numberOfFives);
 
-    // Add random win chance logic for 38% win rate
+    // Add random win chance logic for 27% win rate
     if (Math.random() <= winPercentage) {
-        pointsAwarded = Math.max(pointsAwarded, 50); // Ensure that win happens with some points
+        pointsAwarded = Math.max(pointsAwarded, 50); // Ensure that win happens with some points (at least 50 points)
+    } else {
+        pointsAwarded = -entranceFee; // If the player loses, subtract the entrance fee (this simulates the house edge)
     }
 
     points += pointsAwarded;
 
-    // Update narrative based on the number of fives rolled
-    storyText.textContent = `You rolled ${numberOfFives} five(s)! You earned ${pointsAwarded} points.`;
+    // Update narrative based on the number of fives rolled and the outcome
+    storyText.textContent = `You rolled ${numberOfFives} five(s)! You ${pointsAwarded >= 0 ? 'earned' : 'lost'} ${Math.abs(pointsAwarded)} points.`;
 
     // Track the best round
     if (points > bestRound) {
@@ -77,21 +80,21 @@ function displayDice(diceRolls) {
 function calculatePoints(numberOfFives) {
     switch (numberOfFives) {
         case 0:
-            return -20; // Lose points for no fives
+            return -10; // Lose points for no fives (house advantage)
         case 1:
-            return 50; // 1 five
+            return 20; // 1 five
         case 2:
-            return 100; // 2 fives
+            return 50; // 2 fives
         case 3:
-            return 200; // 3 fives
+            return 100; // 3 fives
         case 4:
-            return 400; // 4 fives
+            return 200; // 4 fives
         case 5:
-            return 800; // 5 fives
+            return 400; // 5 fives
         case 6:
-            return 2000; // 6 fives
+            return 800; // 6 fives
         case 7:
-            return 10000; // 7 fives
+            return 2000; // 7 fives
         default:
             return 0; // Default case (should never happen)
     }
