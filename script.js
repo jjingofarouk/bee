@@ -3,7 +3,7 @@ let points = 5000; // Starting points
 let bestRound = 0; // Best round score
 let consecutiveWins = 0; // Track consecutive wins
 const entranceFee = 20; // Fee to roll the dice (fixed at 20 points)
-const winPercentage = 0.25; // Player wins 25% of the time based on the scoring system
+const winPercentage = 0.38; // Player wins 38% of the time based on the scoring system
 
 // Elements from HTML
 const rollButton = document.getElementById("rollButton");
@@ -35,10 +35,16 @@ function rollDice() {
         }
     }
 
-    displayDice(diceRolls); // Display the rolled dice
+    displayDice(diceRolls); // Display the rolled dice with animation
 
-    // Calculate points based on the number of fives rolled
+    // Calculate points based on the number of fives rolled and win chance
     let pointsAwarded = calculatePoints(numberOfFives);
+
+    // Add random win chance logic for 38% win rate
+    if (Math.random() <= winPercentage) {
+        pointsAwarded = Math.max(pointsAwarded, 50); // Ensure that win happens with some points
+    }
+
     points += pointsAwarded;
 
     // Update narrative based on the number of fives rolled
@@ -53,13 +59,16 @@ function rollDice() {
     updateUI();
 }
 
-// Function to display the dice
+// Function to display the dice with animation
 function displayDice(diceRolls) {
     diceContainer.innerHTML = ''; // Clear previous dice
-    diceRolls.forEach(roll => {
+    diceRolls.forEach((roll, index) => {
         const diceDiv = document.createElement('div');
         diceDiv.classList.add('dice');
         diceDiv.textContent = roll;
+
+        // Add roll animation
+        diceDiv.style.animation = `diceRoll 0.5s ease-in-out ${index * 0.1}s`;
         diceContainer.appendChild(diceDiv);
     });
 }
@@ -98,6 +107,7 @@ function updateUI() {
 function resetGame() {
     points = 5000; // Reset points to starting amount
     bestRound = 0; // Reset best round
+    consecutiveWins = 0; // Reset consecutive wins
     updateUI(); // Update the UI with the new values
     storyText.textContent = "Your legendary journey begins... Roll the dice of fate!";
 }
