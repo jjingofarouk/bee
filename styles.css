@@ -114,24 +114,42 @@ h1 {
     transition: transform 0.3s, box-shadow 0.3s;
 }
 
+/* Hover Effect: Dice Background and Scale */
 .dice:hover {
     background: var(--dice-hover);
     transform: rotate(5deg) scale(1.1);
     box-shadow: var(--shadow-intense);
 }
 
+/* Rolling Animation */
 .dice.rolling {
-    animation: dice-roll 0.5s infinite linear;
+    animation: dice-roll 1s ease-out;
 }
 
 @keyframes dice-roll {
-    0% { transform: rotateX(0) rotateY(0); }
-    25% { transform: rotateX(90deg); }
-    50% { transform: rotateX(90deg) rotateY(90deg); }
-    75% { transform: rotateX(180deg) rotateY(90deg); }
-    100% { transform: rotateX(360deg) rotateY(360deg); }
+    0% {
+        transform: rotate(0deg) translateY(0);
+        opacity: 1;
+    }
+    25% {
+        transform: rotate(90deg) translateY(-20px);
+        opacity: 0.8;
+    }
+    50% {
+        transform: rotate(180deg) translateY(10px);
+        opacity: 0.6;
+    }
+    75% {
+        transform: rotate(270deg) translateY(-10px);
+        opacity: 0.4;
+    }
+    100% {
+        transform: rotate(360deg) translateY(0);
+        opacity: 1;
+    }
 }
 
+/* Game Controls */
 .game-controls {
     display: flex;
     justify-content: center;
@@ -152,12 +170,14 @@ h1 {
     transition: transform 0.3s, box-shadow 0.3s;
 }
 
+/* Hover Effect on Buttons */
 .game-controls button:hover {
     background: var(--btn-hover);
     transform: translateY(-5px);
     box-shadow: var(--shadow-intense);
 }
 
+/* Quest Narrative Section */
 #questNarrative {
     background: rgba(0, 0, 0, 0.1);
     padding: 20px;
@@ -218,6 +238,7 @@ h1 {
     font-size: 0.9rem;
 }
 
+/* Responsive Design */
 @media (max-width: 600px) {
     .container {
         width: 100%;
