@@ -16,7 +16,7 @@
                 <p>Best Round: <span id="bestRound">0</span></p>
             </div>
             <div>
-                <p>Entrance Fee: 20 points</p>
+                <p>Game Cost: 20 points</p>
             </div>
         </div>
 
@@ -28,16 +28,16 @@
 
             <div class="game-controls">
                 <!-- Button to roll the dice -->
-                <button id="rollButton">Roll Dice</button>
+                <button id="rollButton" class="game-button" aria-label="Roll the dice">Roll Dice</button>
 
                 <!-- Button to draw a card -->
-                <button id="drawCardButton">Draw Card</button>
+                <button id="drawCardButton" class="game-button" aria-label="Draw a luck card">Draw Card</button>
 
                 <!-- Button to flip a coin -->
-                <button id="flipCoinButton">Flip Coin</button>
+                <button id="flipCoinButton" class="game-button" aria-label="Flip a coin">Flip Coin</button>
 
                 <!-- Button to reset the game (hidden initially) -->
-                <button id="resetButton" style="display:none;">New Adventure</button>
+                <button id="resetButton" class="game-button" style="display:none;" aria-label="Start a new adventure">New Adventure</button>
             </div>
 
             <div id="questNarrative" class="narrative-section">
