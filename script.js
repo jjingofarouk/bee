@@ -9,7 +9,7 @@ let cardDraws = 3; // Number of card draws available
 const rollButton = document.getElementById("rollButton");
 const drawCardButton = document.getElementById("drawCardButton");
 const flipCoinButton = document.getElementById("flipCoinButton");
-const resetButton = document.getElementById("resetButton");
+const resetButton = document.getElementById("resetButton"); // Reset button element
 const storyText = document.getElementById("storyText");
 const pointsDisplay = document.getElementById("points");
 const bestRoundDisplay = document.getElementById("bestRound");
@@ -163,4 +163,4 @@ resetButton.addEventListener("click", resetGame);
 
 // Initialize Game
 calculateProbabilities();
-updateUI(); 
+updateUI();
