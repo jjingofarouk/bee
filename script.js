@@ -17,7 +17,6 @@ const bestRoundDisplay = document.getElementById("bestRound");
 // Probability and Game Mechanics
 const numDice = 7;
 const winProbabilities = [];
-const winPercentage = 0.35; // Targeted win rate in 35% range
 
 // Binomial Probability Calculation
 function binomialProbability(n, k, p) {
@@ -138,14 +137,22 @@ function updateUI() {
     if (consecutiveWins >= 3) document.getElementById('winStreak').classList.add('achieved');
 }
 
-// Game Reset
+// Game Reset (Always Available)
 function resetGame() {
     points = 5000;
     bestRound = 0;
     consecutiveWins = 0;
     cardDraws = 3;
+    resetAchievements();
     updateUI();
     storyText.textContent = "Your legendary journey begins... Roll the dice of fate!";
+}
+
+// Reset Achievements
+function resetAchievements() {
+    document.getElementById('luckMaster').classList.remove('achieved');
+    document.getElementById('jackpotMilestone').classList.remove('achieved');
+    document.getElementById('winStreak').classList.remove('achieved');
 }
 
 // Event Listeners
