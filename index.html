@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Luck Quest: The Ultimate Challenge</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>🎲 Luck Quest: Destiny's Game 🌟</h1>
+        
+        <div class="game-stats">
+            <div>
+                <p>Points: <span id="points">5000</span></p>
+                <p>Best Round: <span id="bestRound">0</span></p>
+            </div>
+            <div>
+                <p>Luck Score: <span id="luckScore">0</span></p>
+                <p>Game Cost: 500</p>
+            </div>
+        </div>
+
+        <div class="game-area">
+            <div id="diceContainer" class="dice-container"></div>
+
+            <div class="game-controls">
+                <button id="playButton">Embark on Quest</button>
+                <button id="resetButton" style="display:none;">New Adventure</button>
+            </div>
+
+            <div id="questNarrative" class="narrative-section">
+                <p id="storyText">Your legendary journey begins... Roll the dice of fate!</p>
+            </div>
+        </div>
+
+        <div class="achievements-area">
+            <h2>🏆 Adventure Milestones</h2>
+            <div class="milestone-grid">
+                <div class="milestone">
+                    <span id="jackpotMilestone">🌈 Legendary Win</span>
+                    <small>Earn 5000+ points in one round</small>
+                </div>
+                <div class="milestone">
+                    <span id="winStreak">🔥 Win Streak</span>
+                    <small>Win 3 consecutive rounds</small>
+                </div>
+                <div class="milestone">
+                    <span id="luckMaster">✨ Luck Master</span>
+                    <small>Accumulate 20,000 points</small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
