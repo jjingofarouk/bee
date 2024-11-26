@@ -1,49 +1,54 @@
 // Set initial game state variables
-let points = 5000;
+let balance = 2000; // Starting balance in dollars
 let bestRound = 0;
-let luckScore = 0;
-let currentRoundPoints = 0;
+let currentRoundEarnings = 0;
+const gameCost = 500; // Fee to play each round
+const winPercentage = 0.25; // Player wins 25% of the time
 
 // Elements from HTML
 const rollButton = document.getElementById("rollButton");
-const luckCardButton = document.getElementById("luckCardButton");
 const rerollButton = document.getElementById("rerollButton");
 const resetButton = document.getElementById("resetButton");
 const storyText = document.getElementById("storyText");
 const diceContainer = document.getElementById("diceContainer");
-const pointsDisplay = document.getElementById("points");
+const balanceDisplay = document.getElementById("balance");
 const bestRoundDisplay = document.getElementById("bestRound");
-const luckScoreDisplay = document.getElementById("luckScore");
-
-const gameCost = 500;
-const winPercentage = 0.25; // Player wins 25% of the time, adjusted for balance
 
 // Function to roll the dice
 function rollDice() {
+    if (balance < gameCost) {
+        alert("You don't have enough money to play. Try again later!");
+        return; // Stop the game if the player can't afford the entry fee
+    }
+
+    // Subtract the cost of the round
+    balance -= gameCost;
+
     // Generate a random roll from 1 to 6
     const roll = Math.floor(Math.random() * 6) + 1;
     displayDice(roll);
 
-    // Calculate the reward based on roll
+    // Calculate the earnings based on the roll
     if (roll === 1) {
-        currentRoundPoints = 0;
-        storyText.textContent = "You rolled a 1! No points this round.";
+        currentRoundEarnings = 0;
+        storyText.textContent = "You rolled a 1! You lose your $500 for this round.";
     } else if (roll === 6) {
-        currentRoundPoints = 2000;
-        storyText.textContent = "Lucky roll! You earned 2000 points!";
+        currentRoundEarnings = 2000; // Big reward for rolling a 6
+        storyText.textContent = "Lucky roll! You earned $2000!";
     } else {
-        currentRoundPoints = roll * 500;
-        storyText.textContent = `You rolled a ${roll}. You earned ${currentRoundPoints} points!`;
+        currentRoundEarnings = roll * 500; // Earnings based on the roll
+        storyText.textContent = `You rolled a ${roll}. You earned $${currentRoundEarnings}!`;
     }
 
-    // Update total points and check for win streaks
-    points += currentRoundPoints;
-    if (points > bestRound) {
-        bestRound = points;
+    // Add the earnings to the balance
+    balance += currentRoundEarnings;
+
+    // Update the best round if needed
+    if (balance > bestRound) {
+        bestRound = balance;
     }
 
-    updateUI();
-    checkForAchievements();
+    updateUI(); // Update the UI with the new balance and best round
 }
 
 // Function to display the dice
@@ -53,55 +58,26 @@ function displayDice(roll) {
 
 // Function to update the UI elements
 function updateUI() {
-    pointsDisplay.textContent = points;
-    bestRoundDisplay.textContent = bestRound;
-    luckScoreDisplay.textContent = luckScore;
+    balanceDisplay.textContent = `$${balance.toFixed(2)}`; // Display the current balance
+    bestRoundDisplay.textContent = `$${bestRound.toFixed(2)}`; // Display the best round
 }
 
-// Function to check if the player achieved any milestones
-function checkForAchievements() {
-    if (points >= 5000 && !document.getElementById("jackpotMilestone").classList.contains("earned")) {
-        document.getElementById("jackpotMilestone").classList.add("earned");
-        alert("🎉 You unlocked the Legendary Win milestone!");
-    }
-    if (points >= 20000 && !document.getElementById("luckMaster").classList.contains("earned")) {
-        document.getElementById("luckMaster").classList.add("earned");
-        alert("🌟 You unlocked the Luck Master milestone!");
-    }
-}
-
-// Function to handle rerolling
+// Function to reroll the dice
 function rerollDice() {
-    currentRoundPoints = 0; // Reset points for reroll
-    rollDice();
+    currentRoundEarnings = 0; // Reset earnings for reroll
+    rollDice(); // Reroll the dice
 }
 
 // Function to reset the game
 function resetGame() {
-    points = 5000;
-    luckScore = 0;
-    currentRoundPoints = 0;
-    rollDice();
-    updateUI();
+    balance = 2000; // Reset balance to starting amount
+    currentRoundEarnings = 0;
+    rollDice(); // Start a new round
+    updateUI(); // Update the UI with the new balance
     storyText.textContent = "Your legendary journey begins... Roll the dice of fate!";
 }
 
 // Event listeners for buttons
-rollButton.addEventListener("click", function() {
-    if (points >= gameCost) {
-        points -= gameCost;
-        rollDice();
-    } else {
-        alert("Not enough points to play. Try again later!");
-    }
-});
-
-luckCardButton.addEventListener("click", function() {
-    // Implement Luck Card mechanics here if desired
-    luckScore += 1000;
-    alert("Lucky you! You've drawn a Luck Card!");
-    updateUI();
-});
-
+rollButton.addEventListener("click", rollDice);
 rerollButton.addEventListener("click", rerollDice);
 resetButton.addEventListener("click", resetGame);
