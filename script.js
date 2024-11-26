@@ -163,4 +163,4 @@ resetButton.addEventListener("click", resetGame);
 
 // Initialize Game
 calculateProbabilities();
-updateUI();
+updateUI(); 
