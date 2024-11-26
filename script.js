@@ -1,125 +1,107 @@
-// Luck Quest: The Ultimate Challenge JavaScript
-
+// Set initial game state variables
 let points = 5000;
 let bestRound = 0;
 let luckScore = 0;
-let winStreak = 0;
-let consecutiveWins = 0;
+let currentRoundPoints = 0;
 
-const playButton = document.getElementById('playButton');
-const resetButton = document.getElementById('resetButton');
-const pointsDisplay = document.getElementById('points');
-const bestRoundDisplay = document.getElementById('bestRound');
-const luckScoreDisplay = document.getElementById('luckScore');
-const storyText = document.getElementById('storyText');
-const diceContainer = document.getElementById('diceContainer');
-const jackpotMilestone = document.getElementById('jackpotMilestone');
-const winStreakMilestone = document.getElementById('winStreak');
-const luckMasterMilestone = document.getElementById('luckMaster');
+// Elements from HTML
+const rollButton = document.getElementById("rollButton");
+const luckCardButton = document.getElementById("luckCardButton");
+const rerollButton = document.getElementById("rerollButton");
+const resetButton = document.getElementById("resetButton");
+const storyText = document.getElementById("storyText");
+const diceContainer = document.getElementById("diceContainer");
+const pointsDisplay = document.getElementById("points");
+const bestRoundDisplay = document.getElementById("bestRound");
+const luckScoreDisplay = document.getElementById("luckScore");
 
-// Helper function to roll a single die
-function rollDie() {
-    return Math.floor(Math.random() * 6) + 1;
-}
+const gameCost = 500;
+const winPercentage = 0.25; // Player wins 25% of the time, adjusted for balance
 
-// Roll 7 dice and display them
+// Function to roll the dice
 function rollDice() {
-    diceContainer.innerHTML = ''; // Clear previous dice
-    const rolls = [];
-    for (let i = 0; i < 7; i++) {
-        const roll = rollDie();
-        rolls.push(roll);
-        const die = document.createElement('div');
-        die.className = 'die';
-        die.textContent = roll;
-        diceContainer.appendChild(die);
-    }
-    return rolls;
-}
+    // Generate a random roll from 1 to 6
+    const roll = Math.floor(Math.random() * 6) + 1;
+    displayDice(roll);
 
-// Calculate points and luck score based on dice rolls
-function calculateResults(rolls) {
-    const fives = rolls.filter(num => num === 5).length;
-    let roundPoints = 0;
-
-    if (fives === 7) {
-        roundPoints = 5000; // Jackpot
-        storyText.textContent = "🌈 Legendary win! The dice bow to your luck!";
-        winStreak++;
-    } else if (fives >= 6) {
-        roundPoints = 3000; // Big win
-        storyText.textContent = "🔥 Big win! Fortune smiles upon you!";
-        winStreak++;
-    } else if (fives >= 3) {
-        roundPoints = 1000; // Standard win
-        storyText.textContent = "✨ A solid win! The stars align.";
-        winStreak++;
+    // Calculate the reward based on roll
+    if (roll === 1) {
+        currentRoundPoints = 0;
+        storyText.textContent = "You rolled a 1! No points this round.";
+    } else if (roll === 6) {
+        currentRoundPoints = 2000;
+        storyText.textContent = "Lucky roll! You earned 2000 points!";
     } else {
-        roundPoints = -500; // Loss
-        storyText.textContent = "💀 Fate was not in your favor this time.";
-        winStreak = 0;
+        currentRoundPoints = roll * 500;
+        storyText.textContent = `You rolled a ${roll}. You earned ${currentRoundPoints} points!`;
     }
 
-    points += roundPoints;
-    luckScore += fives * 100;
-
-    if (roundPoints > bestRound) {
-        bestRound = roundPoints;
+    // Update total points and check for win streaks
+    points += currentRoundPoints;
+    if (points > bestRound) {
+        bestRound = points;
     }
 
-    if (winStreak >= 3) {
-        winStreakMilestone.classList.add('milestone-achieved');
-    }
-
-    if (points >= 20000) {
-        luckMasterMilestone.classList.add('milestone-achieved');
-    }
-
-    if (roundPoints >= 5000) {
-        jackpotMilestone.classList.add('milestone-achieved');
-    }
-
-    return roundPoints;
+    updateUI();
+    checkForAchievements();
 }
 
-// Update UI with new stats
-function updateStats() {
+// Function to display the dice
+function displayDice(roll) {
+    diceContainer.innerHTML = `<div class="dice">${roll}</div>`;
+}
+
+// Function to update the UI elements
+function updateUI() {
     pointsDisplay.textContent = points;
     bestRoundDisplay.textContent = bestRound;
     luckScoreDisplay.textContent = luckScore;
 }
 
-// Reset the game
-function resetGame() {
-    points = 5000;
-    bestRound = 0;
-    luckScore = 0;
-    winStreak = 0;
-    updateStats();
-    storyText.textContent = "Your legendary journey begins... Roll the dice of fate!";
-    diceContainer.innerHTML = '';
-    resetButton.style.display = 'none';
-    playButton.style.display = 'inline-block';
-    document.querySelectorAll('.milestone-achieved').forEach(el => el.classList.remove('milestone-achieved'));
+// Function to check if the player achieved any milestones
+function checkForAchievements() {
+    if (points >= 5000 && !document.getElementById("jackpotMilestone").classList.contains("earned")) {
+        document.getElementById("jackpotMilestone").classList.add("earned");
+        alert("🎉 You unlocked the Legendary Win milestone!");
+    }
+    if (points >= 20000 && !document.getElementById("luckMaster").classList.contains("earned")) {
+        document.getElementById("luckMaster").classList.add("earned");
+        alert("🌟 You unlocked the Luck Master milestone!");
+    }
 }
 
-// Event listeners
-playButton.addEventListener('click', () => {
-    if (points < 500) {
-        storyText.textContent = "💸 Not enough points to play! Reset to start a new adventure.";
-        return;
-    }
+// Function to handle rerolling
+function rerollDice() {
+    currentRoundPoints = 0; // Reset points for reroll
+    rollDice();
+}
 
-    points -= 500; // Deduct game cost
-    const rolls = rollDice();
-    calculateResults(rolls);
-    updateStats();
+// Function to reset the game
+function resetGame() {
+    points = 5000;
+    luckScore = 0;
+    currentRoundPoints = 0;
+    rollDice();
+    updateUI();
+    storyText.textContent = "Your legendary journey begins... Roll the dice of fate!";
+}
 
-    if (points <= 0) {
-        storyText.textContent = "Game Over! Reset to try your luck again.";
-        playButton.style.display = 'none';
-        resetButton.style.display = 'inline-block';
+// Event listeners for buttons
+rollButton.addEventListener("click", function() {
+    if (points >= gameCost) {
+        points -= gameCost;
+        rollDice();
+    } else {
+        alert("Not enough points to play. Try again later!");
     }
 });
 
-resetButton.addEventListener('click', resetGame);
+luckCardButton.addEventListener("click", function() {
+    // Implement Luck Card mechanics here if desired
+    luckScore += 1000;
+    alert("Lucky you! You've drawn a Luck Card!");
+    updateUI();
+});
+
+rerollButton.addEventListener("click", rerollDice);
+resetButton.addEventListener("click", resetGame);
