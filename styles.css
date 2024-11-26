@@ -94,8 +94,130 @@ h1 {
 
 .dice:hover {
     transform: rotate(5deg) scale(1.1) translateY(-10px);
+    box-shadow: var(--shadow-.achievements-area {
+    background: linear-gradient(145deg, rgba(41, 50, 80, 0.7), rgba(17, 34, 64, 0.9));
+    padding: 40px;
+    border-radius: 20px;
+    margin-top: 40px;
+    box-shadow: var(--shadow-intense);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(15px);
+    transition: all 0.3s ease;
+}
+
+.achievements-area:hover {
+    transform: scale(1.02);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+.achievements-area h2 {
+    font-size: 2.5rem;
+    margin-bottom: 30px;
+    background: linear-gradient(45deg, var(--accent-highlight), var(--accent-success));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-align: center;
+    letter-spacing: 3px;
+    text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.2);
+    position: relative;
+}
+
+.achievements-area h2::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 4px;
+    background: linear-gradient(90deg, var(--accent-highlight), var(--accent-success));
+    border-radius: 2px;
+}
+
+.milestone-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+}
+
+.milestone {
+    background: linear-gradient(145deg, var(--bg-secondary), #0e1c3a);
+    border-radius: 15px;
+    padding: 25px;
+    text-align: center;
+    box-shadow: var(--shadow-light);
+    transition: all 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    position: relative;
+    overflow: hidden;
+}
+
+.milestone::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle at center, 
+        rgba(255, 255, 255, 0.1) 0%, 
+        transparent 70%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.milestone:hover::before {
+    opacity: 1;
+}
+
+.milestone:hover {
+    transform: translateY(-10px) scale(1.05);
     box-shadow: var(--shadow-intense);
 }
+
+.milestone span {
+    display: block;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 15px;
+    letter-spacing: 1px;
+}
+
+.milestone small {
+    color: var(--text-secondary);
+    font-size: 1rem;
+    display: block;
+    line-height: 1.5;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .achievements-area {
+        padding: 30px 20px;
+        margin-top: 30px;
+    }
+
+    .achievements-area h2 {
+        font-size: 2rem;
+        letter-spacing: 2px;
+    }
+
+    .milestone-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .milestone span {
+        font-size: 1.5rem;
+    }
+
+    .milestone small {
+        font-size: 0.9rem;
+    }
+}
+
+
 
 /* Enhanced Dice Rolling Animation */
 @keyframes dice-roll {
