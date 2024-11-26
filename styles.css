@@ -1,3 +1,71 @@
+:root {
+    /* Vibrant Color Palette */
+    --bg-primary: linear-gradient(135deg, #1e3c72, #2a5298); /* Deep blue background */
+    --bg-secondary: linear-gradient(135deg, #f6d365, #fda085); /* Warm orange gradient */
+    --text-primary: #ffffff;
+    --text-secondary: #f7e9d7;
+
+    /* Dice Colors */
+    --dice-bg: linear-gradient(135deg, #ffffff, #e4e4e4);
+    --dice-hover: linear-gradient(135deg, #ffdf5d, #ffab40);
+
+    /* Button Colors */
+    --btn-bg: linear-gradient(135deg, #ff7eb3, #ff758c); /* Pink/Red gradient */
+    --btn-hover: linear-gradient(135deg, #ffab40, #ff7eb3);
+
+    /* Accent Colors */
+    --accent-success: linear-gradient(135deg, #4caf50, #8bc34a);
+    --accent-danger: linear-gradient(135deg, #f44336, #ff7961);
+    --accent-highlight: linear-gradient(135deg, #007aff, #5856d6);
+
+    /* Shadow Effects */
+    --shadow-intense: 0 10px 30px rgba(0, 0, 0, 0.5);
+    --shadow-light: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+    user-select: none;
+}
+
+body {
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container {
+    background: var(--bg-secondary);
+    border-radius: 25px;
+    padding: 30px;
+    max-width: 600px;
+    width: 90%;
+    box-shadow: var(--shadow-intense);
+    text-align: center;
+    transform: scale(1);
+    transition: transform 0.3s ease;
+}
+
+.container:hover {
+    transform: scale(1.03);
+}
+
+h1 {
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+    background: var(--accent-highlight);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: 
+
+
 h1 {
     font-size: 2.5rem;
     font-weight: bold;
