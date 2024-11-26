@@ -51,7 +51,7 @@ body {
     border-radius: 20px;
     padding: 50px;
     max-width: 900px;
-    width: 95%;
+    width: 100%;
     box-shadow: var(--shadow-intense);
     text-align: center;
     transform: rotateX(10deg) scale(1);
